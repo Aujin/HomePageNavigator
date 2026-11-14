@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.bak
+*.log
+public/resume/
+public/downloads/
+preview.Caddyfile
+preview-watchdog.sh

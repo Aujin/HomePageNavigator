@@ -1,0 +1,29 @@
+---
+interface Props { section: 'lab' | 'research' | 'resume' }
+const { section } = Astro.props;
+---
+{section === 'lab' && <section class="section lab-section" id="lab" aria-labelledby="lab-title"><div class="container">
+  <div class="section-heading"><div><p class="section-kicker">BUILD / TEST / ITERATE</p><h2 id="lab-title">个人软件实验室<span class="heading-period">.</span></h2></div><p>从日常需求出发，用 AI 辅助开发，也用实际测试检验每一步。</p></div>
+  <div class="lab-grid">
+    <article class="lab-card"><div class="lab-card-top"><span class="lab-label">01 / PRODUCT</span><span class="stage-badge">Windows 试用版</span></div><h3>ADM<span>把下载任务，管理得更清楚。</span></h3><p>下载之外，还要处理限速、失败重试、任务队列，以及完成后的文件归档。</p>
+      <dl class="progress-list"><div><dt>已实现</dt><dd>全局与单任务限速、HTTP(S) 失败重试、队列管理、文件搬运。</dd></div><div><dt>已验证</dt><dd>前端构建、Rust 单元测试与 aria2 联调；已生成 Windows 便携包。</dd></div><div><dt>继续完善</dt><dd>完整使用流程、真实跨盘搬运与其他平台；断点续传取决于服务器支持。</dd></div></dl>
+      <a class="text-link" href="https://github.com/Aujin/AurumDownloadManager" target="_blank" rel="noopener noreferrer">查看项目仓库 ↗</a>
+    </article>
+    <article class="lab-card"><div class="lab-card-top"><span class="lab-label">02 / EXPLORATION</span><span class="stage-badge prototype">音频链路原型</span></div><h3>PhoneMic<span>让手机成为电脑的麦克风。</span></h3><p>探索通过局域网传输麦克风音频，供 Windows 应用作为输入使用。</p>
+      <dl class="progress-list"><div><dt>已实现</dt><dd>模拟音频生成、Opus 编码、UDP 发送、Windows 接收解码与 PCM 缓冲。</dd></div><div><dt>已验证</dt><dd>缓冲测试与 Opus 编解码测试；修复跨播放回调的样本丢失问题。</dd></div><div><dt>继续完善</dt><dd>真实手机端采集，以及手机到虚拟声卡的完整音频链路验证。</dd></div></dl>
+      <a class="text-link" href="https://github.com/Aujin/PhoneMic" target="_blank" rel="noopener noreferrer">查看项目仓库 ↗</a>
+    </article>
+    <article class="lab-card"><div class="lab-card-top"><span class="lab-label">03 / WORKBENCH</span><span class="stage-badge">Windows 早期试用版</span></div><h3>AurumTerm<span>文件、比较与任务，在同一个工作台。</span></h3><p>支持多列标签、本地文件比较、压缩解压与 FFmpeg 转换；重启后可恢复未保存草稿。</p>
+      <dl class="progress-list"><div><dt>已实现</dt><dd>中英双语、工作区恢复、ZIP/TAR 归档和统一转换任务队列。</dd></div><div><dt>已验证</dt><dd>78 项测试、真实归档往返、音频转换，以及桌面草稿恢复和关闭保护。</dd></div><div><dt>继续完善</dt><dd>SSH/SFTP、远程计算、三方合并与文件写回；当前本地文件仅在本机执行。</dd></div></dl>
+      <a class="text-link" href="/projects/aurumterm/">介绍与 Windows 下载 ↗</a>
+    </article>
+  </div>
+</div></section>}
+{section === 'research' && <article class="reproduction-card" aria-labelledby="reproduction-title">
+  <div><p class="section-kicker">OPEN RESEARCH</p><h3 id="reproduction-title">让研究方法可以被复现。</h3><p>高度可调协作无线充电的成本优化代码已整理至 GitHub，包含 MATLAB 实验代码、参数配置及 CSV 数据。可从项目 README 了解实验与绘图方法。</p><a class="text-link" href="https://github.com/Aujin/Cost-Minimization-for-Height-adjustable-Pendant-Cooperative-wireless-charging" target="_blank" rel="noopener noreferrer">查看代码与复现说明 ↗</a></div>
+  <ol class="reproduction-steps"><li><span>01</span><div><strong>问题建模</strong><small>充电几何、接收功率与成本约束</small></div></li><li><span>02</span><div><strong>算法比较</strong><small>HCSA、基线方法与小规模最优解</small></div></li><li><span>03</span><div><strong>实验复现</strong><small>参数配置、敏感性数据与绘图脚本</small></div></li></ol>
+</article>}
+{section === 'resume' && <section class="section resume-section" id="resume" aria-labelledby="resume-title"><div class="container resume-panel">
+  <div><p class="section-kicker">A LITTLE MORE ABOUT ME</p><h2 id="resume-title">把经历，带走一份。</h2><p>2027 届硕士 · AI 应用开发 · 南京<br />中英文简历均为单页 PDF，含教育、工作、项目与科研经历。</p><span class="updated-at">网站简历更新于 2026.11.11</span></div>
+  <div class="resume-downloads"><a class="resume-download" href="/resume/CV_CN.pdf" download="金煦然_中文简历.pdf"><span><strong>中文简历</strong><small>PDF / 单页 / 小于 1 MB</small></span><span aria-hidden="true">↓</span></a><a class="resume-download" href="/resume/CV_EN.pdf" download="Xuran_Jin_Resume.pdf" lang="en"><span><strong>English résumé</strong><small>PDF / One page / Under 1 MB</small></span><span aria-hidden="true">↓</span></a></div>
+</div></section>}

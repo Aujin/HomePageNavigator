@@ -1,0 +1,25 @@
+---
+import '../../styles/global.css';
+import '../../styles/enhancements.css';
+const metrics = [['2,369', '累计用户'], ['1,285', '提交作业'], ['1,254', 'AI 批改'], ['662', '学生答辩']];
+const roles = [
+  ['教师', '发布与管理作业，发起批改及出题任务，查看答辩结果并导出成绩。'],
+  ['学生', '提交作业，参与个性化限时答辩，查看作业与成绩反馈。'],
+  ['管理员', '通过管理界面维护用户与课程，支持平台日常管理。'],
+];
+---
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title>AURA 项目案例 · 金煦然</title><meta name="description" content="AURA AI 作业批改与个性化答辩系统：React / TypeScript、FastAPI 与 Celery / Redis 的应用层开发案例。" /><meta name="theme-color" content="#f7faff" /><link rel="icon" type="image/svg+xml" href="/favicon.svg" /></head>
+<body class="case-page"><a class="skip-link" href="#case-content">跳转到主要内容</a>
+  <header class="header"><div class="container nav-inner"><a class="brand" href="/"><span class="brand-icon">✳</span> XURAN<span class="brand-dot">.</span></a><a class="case-back" href="/#projects">← 返回项目</a></div></header>
+  <main id="case-content">
+    <section class="case-hero"><div class="container"><p class="section-kicker">SELECTED CASE / 2026.01 — 2026.06</p><h1>AURA<span>从 AI 批改，走到个性化答辩。</span></h1><p class="case-lead">把作业提交、AI 批改、答辩与成绩管理连接起来，让教师与学生在同一套应用中完成教学反馈。</p><div class="pill-list"><span>React / TypeScript</span><span>FastAPI</span><span>PostgreSQL</span><span>Celery / Redis</span><span>百炼应用流</span></div><div class="hero-actions"><a class="button primary" href="http://47.103.215.38:5173/" target="_blank" rel="noopener noreferrer">访问项目演示 ↗</a><a class="button secondary" href="#implementation">了解我的实现 ↓</a></div><p class="case-award">✦ 2026“息壤杯”全国人工智能 OPC 创新大赛<br />惠民产品创新赛道 · 高校赛区决赛优胜奖</p></div></section>
+    <figure class="container case-screenshot"><img src="/images/aura-home.png" alt="AURA 实际首页，展示个性化题目生成、课堂限时答辩与教师人工复评入口" width="1280" height="720" /><figcaption>项目实际首页 · 2026.11.11</figcaption></figure>
+    <div class="container case-metrics">{metrics.map(([value, label]) => <div><strong>{value}</strong><span>{label}</span></div>)}</div><p class="container metric-caption">项目阶段累计记录，非实时统计；使用量来自项目资料。</p>
+    <section class="section case-section"><div class="container case-split"><div><p class="section-kicker">THE PROBLEM</p><h2>作业交上来之后，<br />如何继续了解学生的理解？</h2></div><div class="case-prose"><p>作业提交、批改、答辩和成绩整理涉及不同的任务与角色。AURA 围绕这些环节构建教学流程，用 AI 辅助批改和生成个性化问题，再把答辩记录与成绩交还给教师查看。</p><p>我的职责是项目推进与应用层全栈开发：让教师、学生和管理员能够完成各自的操作，并把外部 AI 能力接入可查询、可管理的任务流程。</p></div></div></section>
+    <section class="section case-section case-tinted"><div class="container"><p class="section-kicker">ONE WORKFLOW / THREE ROLES</p><h2>围绕使用者，把流程连接起来。</h2><div class="case-role-grid">{roles.map(([title, description]) => <article><span class="lab-label">{title}</span><h3>{title === '教师' ? '组织教学反馈' : title === '学生' ? '完成作业与答辩' : '维护平台运行'}</h3><p>{description}</p></article>)}</div><ol class="case-workflow" aria-label="作业反馈流程">{['作业提交', '异步批改', '个性化出题', '限时答辩', '成绩查看与导出'].map((step, i) => <li><span>0{i + 1}</span><strong>{step}</strong></li>)}</ol></div></section>
+    <section class="section case-section" id="implementation"><div class="container"><p class="section-kicker">MY CONTRIBUTION</p><h2>从操作界面，到异步任务。</h2><div class="case-split implementation-grid"><div class="case-prose"><h3>应用层独立开发</h3><p>基于 React / TypeScript 构建三类角色的页面，使用 FastAPI 实现课程、作业提交、答辩与成绩管理接口，覆盖作业管理和成绩导出等实际操作。</p><h3>将 AI 接入业务流程</h3><p>对接百炼应用流，通过 Celery / Redis 异步处理 AI 批改与个性化出题，支持任务状态查询、取消与重试，让耗时操作可以独立管理。</p><p class="scope-note">个人贡献范围为应用层开发与 AI 工作流接入；LLM 工作流内部设计由独立部分完成。</p></div><figure class="architecture-diagram"><figcaption>应用架构示意</figcaption><div class="architecture-node"><small>交互层</small><strong>React / TypeScript</strong><span>教师 · 学生 · 管理员</span></div><div class="architecture-arrow" aria-hidden="true">↕</div><div class="architecture-node"><small>业务层</small><strong>FastAPI + PostgreSQL</strong><span>课程 · 作业 · 答辩 · 成绩</span></div><div class="architecture-arrow" aria-hidden="true">↕</div><div class="architecture-node"><small>异步任务与 AI 接入</small><strong>Celery / Redis → 百炼应用流</strong><span>批改 · 出题 · 状态查询 · 取消与重试</span></div></figure></div></div></section>
+    <section class="section case-section case-tinted"><div class="container case-split"><div><p class="section-kicker">WHAT THIS PROJECT SHOWS</p><h2>让模型能力，<br />进入完整的应用。</h2></div><div class="case-prose"><p>这个项目串起了多角色界面、业务接口、数据管理与异步 AI 任务。相比单次调用模型，更关注用户从提交到获得反馈的完整过程，以及任务如何被追踪和管理。</p><p>项目演示可查看公开介绍与页面；系统累计使用数据与本案例均为阶段记录。</p><a class="text-link" href="http://47.103.215.38:5173/" target="_blank" rel="noopener noreferrer">打开 AURA 演示 ↗</a></div></div></section>
+    <section class="case-end container"><a class="button secondary" href="/#projects">← 查看其他项目</a><a class="text-link" href="mailto:jinxuran@aurumjin.cn">交流项目与机会 ↗</a></section>
+  </main><footer class="footer"><div class="container footer-inner"><span>© {new Date().getFullYear()} Xuran Jin.</span><span>项目案例 · 更新于 2026.11.11</span></div></footer>
+</body></html>

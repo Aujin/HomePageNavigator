@@ -1,0 +1,148 @@
+---
+import '../styles/global.css';
+import '../styles/enhancements.css';
+import PortfolioExtras from '../components/PortfolioExtras.astro';
+
+const profile = {
+  name: '金煦然', english: 'Xuran Jin',
+  email: 'jinxuran@aurumjin.cn', github: 'https://github.com/Aujin',
+  tagline: '让算法研究走向真实世界',
+  summary: '2027 届信息与通信工程硕士，关注 AI 应用开发与优化算法。从教育 AI 产品到个人软件，用代码把想法变成可验证的实现；也有智能终端 Modem 协议栈研发经验。',
+};
+const projects = [
+  { no: '01', category: 'AI · 教育科技', title: 'AURA · AI 作业批改与个性化答辩', role: '项目负责人 / 应用层全栈开发', year: '2026', description: '独立开发教师、学生与管理员三类角色的应用层，贯通作业管理、AI 批改接入、个性化答辩与成绩导出。使用 Celery / Redis 异步处理批改与出题，支持任务查询、取消和重试。', flow: ['作业提交', '异步 AI 批改', '个性化答辩', '成绩管理'], tags: ['React / TypeScript', 'FastAPI', 'Celery / Redis', '百炼应用流'], stats: [['2,369','累计用户'],['1,254','AI 批改'],['662','学生答辩']], note: '2026“息壤杯”全国人工智能 OPC 创新大赛 · 惠民产品创新赛道高校赛区决赛优胜奖。数据为项目阶段累计记录，非实时统计。', link: '/projects/aura/', linkLabel: '阅读项目案例', accent: 'blue', },
+  { no: '02', category: 'AI Agent · 创新教育', title: '创想家 · 创新思维训练智能体', role: '项目经理 / LLM Agent 开发', year: '2025', description: '负责创新思维训练智能体的创建与开发，支持情境学习、实践训练与个性化辅导，并协调模块开发进度。', flow: ['情境学习', '实践训练', '个性辅导'], tags: ['LLM Agent', '创新教育', '项目管理'], stats: [], accent: 'violet', },
+  { no: '03', category: '个人项目 · 音频', title: 'PhoneMic · 局域网手机麦克风', role: 'AI 辅助开发 / 音频链路原型', year: '原型验证', description: '围绕手机麦克风作为 Windows 音频输入的需求，构建模拟发送、Opus / UDP 传输与接收解码链路，修复跨回调 PCM 样本丢失问题。已通过缓冲与编解码测试；真实手机采集及虚拟声卡端到端链路待验证。', flow: ['模拟音频', 'Opus / UDP', 'PCM 缓冲'], tags: ['Python', 'Opus', 'UDP', 'Windows'], stats: [], link: 'https://github.com/Aujin/PhoneMic', linkLabel: '查看代码与进展', accent: 'cyan', },
+  { no: '04', category: '个人项目 · 桌面应用', title: 'ADM · 桌面下载管理器', role: 'AI 辅助开发 / Windows 试用版', year: '持续完善', description: '基于 Tauri、React、Rust 与 aria2，已生成 Windows 试用版便携包。实现全局与单任务限速、HTTP(S) 失败重试，以及队列和文件搬运管理；已通过 Rust 单元测试和 aria2 联调，其他平台仍待验证。', flow: ['添加任务', '下载与限速', '文件归档'], tags: ['Tauri', 'React', 'Rust', 'aria2'], stats: [], link: 'https://github.com/Aujin/AurumDownloadManager', linkLabel: '查看代码与进展', accent: 'violet', },
+  { no: '05', category: '个人项目 · 桌面工作台', title: 'AurumTerm · 文件比较与任务工作台', role: '独立设计 / AI 辅助开发', year: '0.3.0 试用版', description: '以可拖动的多列标签组织文件、文本和比较结果。已实现本地归档、FFmpeg 转换队列及未保存草稿恢复，并提供 Windows x64 便携版；SSH/SFTP 和远程计算仍在开发。', flow: ['多列标签', '比较与归档', '转换任务'], tags: ['Electron', 'React / TypeScript', 'FFmpeg', 'libarchive'], stats: [], link: '/projects/aurumterm/', linkLabel: '介绍与下载', accent: 'blue', },
+  { no: '06', category: 'IoT · 嵌入式系统', title: '可穿戴传感器睡眠质量检测系统', role: '硬件 / C++ 设计', year: '2021', description: '本科毕业设计。使用 Arduino、KL36、ZigBee 和 NB-IoT 搭建采集、通信与云端数据链路，负责嵌入式程序、通信模块及服务端数据接收。', flow: ['传感采集', 'ZigBee / NB-IoT', '云端接收'], tags: ['C++', 'Arduino', 'ZigBee', 'NB-IoT'], stats: [], accent: 'cyan', },
+];
+const research = [
+  { kind: '研究方向', title: '高度可调协作无线充电优化', detail: '研究三维无线可充电传感网络中的成本最小化与效用最大化，使用 MATLAB / Python 进行建模、仿真和算法调优。', status: '进行中' },
+  { kind: '学术论文 · 第二作者', title: 'Approximation Algorithm Design for Cost Minimization in Height-Adjustable Pendant Cooperative Charging', detail: 'Scientific Reports；已完成一修，同行评审中。围绕充电成本最小化开展算法设计与仿真实验。', status: '同行评审中' },
+  { kind: '研究稿件 · 第二作者', title: 'Utility Maximization via Height-Adjustable Pendant Cooperative Wireless Charging in Dense WRSNs', detail: '围绕充电效用最大化，开展模型与约束核对、动态选高基线比较及消融实验；MSN 2026 投稿后修订，准备后续投稿。', status: '修订中' },
+  { kind: '发明专利', title: '基于中间特征引导的跨模态行人重识别方法', detail: '中国发明专利；共同发明人。', status: '已授权' },
+  { kind: '发明专利', title: '面向农业移动传感器的高度可调合作充电成本优化方法及系统', detail: '申请号 202610132980.3；共同发明人。', status: '实质审查中' },
+  { kind: '发明专利', title: '一种应对 AI 依赖的作业熟悉度检测方法及系统', detail: '申请号 202610715625.9；共同发明人。', status: '实质审查中' },
+];
+const skills = [
+  { title: 'AI & Algorithms', detail: '机器学习与深度学习、PyTorch、智能体开发、优化算法、MATLAB 仿真' },
+  { title: 'Software Engineering', detail: 'React / TypeScript、FastAPI、PostgreSQL、Celery / Redis；Python、C、Git，具备 Vue.js 使用经验' },
+  { title: 'Systems & Tooling', detail: 'Linux 服务器运维、自动化脚本、Conda、LaTeX、嵌入式通信' },
+];
+const career = [
+  { date: '2024.09 — 2027.06（预计）', title: '南通大学 · 硕士研究生', meta: '信息与通信工程', desc: '无线电能传输、合作充电优化算法与 AI 工程实践。' },
+  { date: '2021.07 — 2022.07', title: '南京中科创达软件科技有限公司', meta: 'MODEM 工程师 · 智能终端事务部', desc: '参与 Sony、荣耀等智能终端 Modem 协议栈开发与维护，累计约 300 次代码提交、处理约 400 个 Jira 问题；独立开发 Policyman 自动化脚本，将原本约两周的配置比对任务缩短至约三天。' },
+  { date: '2017.09 — 2021.06', title: '南通大学 · 工学学士', meta: '物联网工程', desc: '嵌入式开发、通信系统与软硬件协同实践。' },
+];
+const personalWork = [
+  { label: '效率工具 · Policyman', title: '把两周的配置比对缩短至三天', detail: '在中科创达独立开发 Qualcomm Policyman 配置比对脚本，匹配 Excel 中数万条数据与代码配置，把重复的人工核对转化为可重复执行的工具流程。' },
+  { label: 'AI 协作', title: '从日常问题出发做可验证的原型', detail: 'PhoneMic 与 ADM 都源于实际使用需求。先实现最小链路、记录已通过的验证，再明确下一步尚未完成的功能。' },
+];
+---
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="theme-color" content="#f7faff" />
+  <meta name="description" content="金煦然 Xuran Jin 的个人主页，聚焦人工智能、算法优化、AI 智能体与工程实践。" />
+  <title>金煦然 · Xuran Jin | AI Application Developer</title>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">跳转到主要内容</a>
+  <div class="site-shell">
+    <header class="header" id="top">
+      <div class="container nav-inner">
+        <a class="brand" href="#top" aria-label="返回首页"><span class="brand-icon">✳</span> XURAN<span class="brand-dot">.</span></a>
+        <nav class="nav-links" aria-label="主导航">
+          <a href="#projects">项目</a><a href="#research">科研</a><a href="#experience">经历</a><a href="#skills">技能</a><a href="#resume">简历</a>
+        </nav>
+        <a class="nav-contact" href={`mailto:${profile.email}`}>联系我 <span aria-hidden="true">↗</span></a>
+        <button class="menu-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span></span></button>
+      </div>
+      <nav class="mobile-nav" id="mobile-nav" aria-label="移动端导航" hidden>
+        <a href="#projects">项目</a><a href="#research">科研</a><a href="#experience">经历</a><a href="#skills">技能</a><a href="#resume">简历</a><a href="#contact">联系</a>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <section class="hero section" aria-labelledby="hero-title">
+        <div class="hero-glow glow-one" aria-hidden="true"></div><div class="hero-glow glow-two" aria-hidden="true"></div>
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="status-dot"></span> 2027 届硕士 · OPEN TO AI OPPORTUNITIES</p>
+            <p class="hero-intro">你好，我是 <strong>{profile.name}</strong><span class="name-en"> / {profile.english}</span></p>
+            <h1 id="hero-title">让算法研究<br /><span class="gradient-text">走向真实世界。</span></h1>
+            <p class="hero-description">{profile.summary}</p>
+            <div class="hero-actions"><a class="button primary" href="#projects">探索我的项目 <span>↗</span></a><a class="button secondary" href={profile.github} target="_blank" rel="noopener noreferrer">GitHub <span>↗</span></a></div>
+            <a class="hero-resume-link text-link" href="#resume">下载中英文简历 ↓</a><div class="hero-tags"><span>机器学习与优化</span><span>AI Agent</span><span>工程开发</span><span>无线通信</span></div>
+          </div>
+          <div class="hero-art" aria-label="由连接节点构成的抽象 AI 神经网络示意图">
+            <div class="art-halo"></div>
+            <svg viewBox="0 0 540 480" fill="none" role="img" aria-label="蓝紫色神经网络节点可视化">
+              <defs><linearGradient id="wire" x1="50" y1="20" x2="470" y2="440" gradientUnits="userSpaceOnUse"><stop stop-color="#76C3FF"/><stop offset="1" stop-color="#B48CF5"/></linearGradient><radialGradient id="node"><stop stop-color="white"/><stop offset="1" stop-color="#8B9FFA"/></radialGradient></defs>
+              <g stroke="url(#wire)" stroke-width="1.5" opacity=".48">
+                <path d="M85 175L175 85 293 115 407 60 468 165 390 269 468 376 301 405 180 338 75 363 85 175 180 338 293 115 390 269 175 85M75 363L390 269M180 338L468 165M293 115L301 405M407 60L390 269M85 175L468 165M175 85L468 165M301 405L468 376" />
+              </g>
+              <g class="floating-node"><circle cx="85" cy="175" r="10" fill="url(#node)"/><circle cx="175" cy="85" r="8" fill="url(#node)"/><circle cx="293" cy="115" r="13" fill="url(#node)"/><circle cx="407" cy="60" r="7" fill="url(#node)"/><circle cx="468" cy="165" r="11" fill="url(#node)"/><circle cx="390" cy="269" r="16" fill="url(#node)"/><circle cx="468" cy="376" r="7" fill="url(#node)"/><circle cx="301" cy="405" r="10" fill="url(#node)"/><circle cx="180" cy="338" r="13" fill="url(#node)"/><circle cx="75" cy="363" r="8" fill="url(#node)"/></g>
+              <circle cx="275" cy="237" r="64" fill="#fff" fill-opacity=".82" stroke="#fff" stroke-width="2"/><circle cx="275" cy="237" r="50" stroke="#9FAEFD" stroke-dasharray="4 7"/><text x="275" y="233" text-anchor="middle" fill="#5669DA" font-size="23" font-weight="700">AI</text><text x="275" y="253" text-anchor="middle" fill="#70809D" font-size="9" letter-spacing="2">RESEARCH</text>
+            </svg>
+            <div class="art-chip chip-top"><span class="chip-dot"></span> MODEL · OPTIMIZATION</div>
+            <div class="art-chip chip-bottom">RESEARCH <span>→</span> PRODUCTION</div>
+          </div>
+        </div>
+        <div class="container hero-foot"><span>SCROLL TO EXPLORE</span><span class="scroll-line"></span><span>01 — PORTFOLIO</span></div>
+      </section>
+
+      <section class="section section-projects" id="projects"><div class="container">
+        <div class="section-heading reveal"><div><p class="section-kicker">01 / SELECTED WORK</p><h2>精选项目<span class="heading-period">.</span></h2></div><p>从算法设计到系统交付，关注能够落地、能够验证的技术成果。</p></div>
+        <div class="project-grid">{projects.filter(p => !["03", "04"].includes(p.no)).map((p, i) => <article class={`project-card accent-${p.accent} reveal`} style={`--delay:${i * 70}ms`}><div class="project-cover"><span class="cover-index">{String(i + 1).padStart(2, "0")} / PROJECT FLOW</span><ol class="cover-flow" aria-hidden="true">{p.flow.map((step, index) => <li><span>{String(index + 1).padStart(2, '0')}</span>{step}</li>)}</ol><span class="cover-category">{p.category} · 流程示意</span></div><div class="project-body"><div class="project-meta"><span>{p.year}</span><span>{p.role}</span></div><h3>{p.title}</h3><p>{p.description}</p>{p.stats.length > 0 && <div class="project-stats">{p.stats.map(s => <div><strong>{s[0]}</strong><small>{s[1]}</small></div>)}</div>}{p.note && <p class="project-note">{p.note}</p>}<div class="pill-list">{p.tags.map(tag => <span>{tag}</span>)}</div>{p.link && <a class="project-link" href={p.link} target={p.link.startsWith("http") ? "_blank" : undefined} rel={p.link.startsWith("http") ? "noopener noreferrer" : undefined}>{p.linkLabel}<span aria-hidden="true">↗</span></a>}</div></article>)}</div>
+      </div></section>
+
+      <PortfolioExtras section="lab" />
+
+      <section class="section approach-section" aria-labelledby="approach-title"><div class="container approach-grid"><div class="approach-heading reveal"><p class="section-kicker">HOW I WORK</p><h2 id="approach-title">从研究问题，<br />走到可验证的实现<span class="heading-period">.</span></h2><p>把模型、代码和实际使用场景连接起来，是我持续在做的事。</p></div><div class="approach-items">{personalWork.map(item => <article class="approach-item reveal"><span>{item.label}</span><h3>{item.title}</h3><p>{item.detail}</p></article>)}</div></div></section>
+
+      <section class="section research-section" id="research"><div class="container"><div class="section-heading reveal"><div><p class="section-kicker">02 / RESEARCH</p><h2>科研与创新<span class="heading-period">.</span></h2></div><p>结合数学建模、优化算法与实验验证，探索智能系统的效率边界。</p></div><div class="research-grid">{research.map((item,i) => <article class="research-item reveal" style={`--delay:${i*60}ms`}><div class="research-top"><span>{item.kind}</span><span class="research-status">{item.status}</span></div><h3>{item.title}</h3><p>{item.detail}</p></article>)}</div><p class="section-note">研究与成果状态更新于 2026.11.11；修订中稿件不作为已发表成果展示。</p><PortfolioExtras section="research" /></div></section>
+
+      <section class="section experience-section" id="experience"><div class="container"><div class="section-heading reveal"><div><p class="section-kicker">03 / EXPERIENCE</p><h2>成长轨迹<span class="heading-period">.</span></h2></div><p>科研视角与工程经验交汇：既关注算法有效性，也关注稳定交付。</p></div><div class="timeline">{career.map(item => <article class="timeline-item reveal"><div class="timeline-date">{item.date}</div><div class="timeline-content"><h3>{item.title}</h3><p class="timeline-meta">{item.meta}</p><p>{item.desc}</p></div></article>)}</div><div class="achievement-strip reveal"><div><span class="achievement-star">✦</span><strong>优秀研究生</strong><small>南通大学</small></div><div><span class="achievement-star">✦</span><strong>一等奖学金</strong><small>2025 / 2020</small></div><div><span class="achievement-star">✦</span><strong>CET-6</strong><small>英文技术阅读与交流</small></div></div></div></section>
+
+      <section class="section skills-section" id="skills"><div class="container"><div class="section-heading reveal"><div><p class="section-kicker">04 / EXPERTISE</p><h2>技术能力<span class="heading-period">.</span></h2></div><p>围绕 AI 算法研发、全栈实现和系统工具链构建持续积累。</p></div><div class="skills-grid">{skills.map((s,i) => <div class="skill-card reveal" style={`--delay:${i*80}ms`}><span class="skill-ordinal">0{i+1}</span><h3>{s.title}</h3><p>{s.detail}</p></div>)}</div></div></section>
+
+      <PortfolioExtras section="resume" />
+
+      <section class="contact-section section" id="contact"><div class="container"><div class="contact-panel reveal"><div class="contact-spark">✳</div><p class="section-kicker">05 / LET'S CONNECT</p><h2>一起探索<br /><span>下一个可能。</span></h2><p>关注 AI / 算法开发、智能体应用与工程实践方向。欢迎交流技术、项目与工作机会。</p><div class="contact-actions"><a class="button contact-button" href={`mailto:${profile.email}`}>发送邮件 <span>↗</span></a><a class="contact-github" href={profile.github} target="_blank" rel="noopener noreferrer">GitHub / Aujin ↗</a></div></div></div></section>
+    </main>
+    <footer class="footer"><div class="container footer-inner"><span>© {new Date().getFullYear()} {profile.english}. Built with Astro.</span><a href="#top">返回顶部 ↑</a></div></footer>
+  </div>
+  <script>
+    const menuButton = document.querySelector<HTMLButtonElement>('.menu-toggle');
+    const mobileNav = document.querySelector<HTMLElement>('.mobile-nav');
+    const closeMenu = () => {
+      if (!menuButton || !mobileNav) return;
+      mobileNav.hidden = true;
+      menuButton.setAttribute('aria-expanded', 'false');
+      menuButton.setAttribute('aria-label', '打开导航菜单');
+    };
+    menuButton?.addEventListener('click', () => {
+      if (!mobileNav) return;
+      const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+      mobileNav.hidden = isOpen;
+      menuButton.setAttribute('aria-expanded', String(!isOpen));
+      menuButton.setAttribute('aria-label', isOpen ? '打开导航菜单' : '关闭导航菜单');
+    });
+    mobileNav?.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
+    window.addEventListener('resize', () => { if (window.innerWidth > 700) closeMenu(); });
+    const items = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); obs.unobserve(entry.target); } });
+      }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+      items.forEach(el => observer.observe(el));
+    } else { items.forEach(el => el.classList.add('visible')); }
+  </script>
+</body>
+</html>
